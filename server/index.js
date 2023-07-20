@@ -18,17 +18,16 @@ const app = express();
 app.use(express.static('public'))
 app.use('/images', express.static('images'))
 
-const path = require("path"); // include this in the file
-
-router.get("/*", function(req, res) {
-  res.sendFile(path.join(__dirname, "../public", "index.html"));
-});
 
 // Middleware
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors())
 dotenv.config();
+
+app.get("/", (req, res) => {
+  res.send({message: "hello world"})
+})
 
 mongoose
   .connect(process.env.MONGO_DB, {
